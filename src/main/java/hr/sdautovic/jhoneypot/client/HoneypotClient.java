@@ -2,11 +2,10 @@ package hr.sdautovic.jhoneypot.client;
 
 import org.xbill.DNS.Lookup;
 import org.xbill.DNS.Record;
-import org.xbill.DNS.TextParseException;
 import org.xbill.DNS.Type;
 
 public class HoneypotClient {
-	private static String LIST_SPECIFIC_DOMAIN = "dnsbl.httpbl.org";
+	private static String LIST_SPECIFIC_DOMAIN = "dnsbl.httpbl.org.";
 	
 	public static HoneypotResult checkWebBL(String auth_key, String ipv4) {
 		String reverse_octet_format = toReverseOctetFormat(ipv4);
@@ -15,10 +14,10 @@ public class HoneypotClient {
 		Record[] records = null;
 		try {
 			records = new Lookup(query, Type.A).run();
-		} catch (TextParseException e) {
-			return new HoneypotResult(records);
-		}
-		return new HoneypotResult(records);
+		} catch (Exception e) {
+			return new HoneypotResult(records, ipv4);
+		} 
+		return new HoneypotResult(records, ipv4);
 	}
 	
 	private static String toReverseOctetFormat(String ipv4) {

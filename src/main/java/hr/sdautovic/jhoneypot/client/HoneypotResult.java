@@ -18,8 +18,10 @@ public class HoneypotResult {
 	
 	public boolean OK = false;
 	private String[] result_tokens;
+	private String query_ipv4;
 	
-	public HoneypotResult(Record[] dns_records) {
+	public HoneypotResult(Record[] dns_records, String query_ipv4) {
+		this.query_ipv4 = query_ipv4;
 		if (dns_records == null) return;
 		else if (dns_records.length > 1) return;
 		
@@ -43,7 +45,7 @@ public class HoneypotResult {
 	}
 	
 	public String toString() {
-		String s = "days=" + this.daysSinceLastActivity() + " thread_score=" + this.threadScore() + " visitor=" + this.visitorType();
+		String s = "ip=" + this.query_ipv4 + " days=" + this.daysSinceLastActivity() + " thread_score=" + this.threadScore() + " visitor=" + this.visitorType();
 		return s;
 	}
 }
